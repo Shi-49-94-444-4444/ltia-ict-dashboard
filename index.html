@@ -439,6 +439,52 @@ td{padding:10px 11px;border-bottom:1px solid #edf0f5;vertical-align:middle} tbod
 }
 </style>
 
+<style id="responsive-ux-v2">
+/* Keep desktop layout intact; shared KPI alignment fix applies at every size. */
+.kpi > .label { text-align:center; }
+.kpi .kpi-total { width:100%; text-align:center; align-items:center; }
+@media screen and (max-width:1050px) {
+  .toolbar { align-items:stretch; }
+  .toolbar > div[style*="margin-left:auto"] { display:none !important; }
+}
+@media screen and (max-width:700px) {
+  .toolbar {
+    display:grid;
+    grid-template-columns:repeat(5,minmax(0,1fr));
+    gap:6px;
+    padding:8px;
+    overflow:visible;
+  }
+  .search { grid-column:1 / -1; }
+  .multi-filter { width:100% !important; min-width:0; }
+  .multi-filter-btn {
+    height:38px; padding:0 18px 0 6px; text-align:center;
+    font-size:clamp(9px,2.7vw,11px); font-weight:750;
+    border-radius:8px; text-overflow:clip;
+  }
+  .multi-filter-btn:after { right:6px; width:5px; height:5px; }
+  .multi-filter-menu { left:auto; right:0; width:max-content; min-width:100%; max-width:88vw; }
+  .kpis { grid-template-columns:repeat(5,minmax(0,1fr)); gap:5px; margin-bottom:10px; }
+  .kpi { min-width:0; min-height:90px; height:auto; padding:8px 4px; border-radius:8px; border-top-width:3px; }
+  .kpi > .label { min-height:30px; display:flex; align-items:center; justify-content:center; text-align:center; font-size:clamp(8px,2.4vw,10px); line-height:1.15; overflow-wrap:anywhere; }
+  .kpi .kpi-total { margin-top:3px; }
+  .kpi .value { width:auto !important; height:auto !important; margin:0 auto !important; font-size:clamp(16px,4.5vw,22px); line-height:1.2; }
+  .kpi .kpi-total small, .kpi-split { display:none !important; }
+  .table-wrap { overflow:auto; }
+  /* Do not freeze any table column on mobile; horizontal scrolling stays natural. */
+  th:first-child, td:first-child { position:static !important; left:auto !important; box-shadow:none !important; }
+  .footerbar { display:none !important; }
+}
+@media screen and (min-width:701px) and (max-width:1050px) {
+  .kpis { grid-template-columns:repeat(5,minmax(0,1fr)); gap:7px; }
+  .kpi { min-width:0; min-height:112px; height:auto; padding:9px 6px; }
+  .kpi > .label { min-height:30px; text-align:center; display:flex; align-items:center; justify-content:center; font-size:10px; line-height:1.15; }
+  .kpi .kpi-total small, .kpi-split { display:none !important; }
+  .kpi .value { font-size:20px; }
+  .footerbar { display:none !important; }
+  th:first-child, td:first-child { position:static !important; left:auto !important; box-shadow:none !important; }
+}
+</style>
 </head>
 <body class="is-loading">
 <div class="app">
@@ -470,11 +516,11 @@ td{padding:10px 11px;border-bottom:1px solid #edf0f5;vertical-align:middle} tbod
   <div class="main">
     <div class="toolbar">
       <div class="search"><input id="search" placeholder="Search Document No., subject, system..." oninput="render()"></div>
-      <div class="multi-filter" id="typeFilterMulti"><button type="button" class="multi-filter-btn" onclick="toggleMultiFilter('typeFilter',event)">All types</button><div class="multi-filter-menu" onclick="event.stopPropagation()"><div class="multi-filter-options"></div><div class="multi-filter-clear" onclick="clearMultiFilter('typeFilter')">Clear selection</div></div></div>
-      <div class="multi-filter" id="systemFilterMulti"><button type="button" class="multi-filter-btn" onclick="toggleMultiFilter('systemFilter',event)">All systems</button><div class="multi-filter-menu" onclick="event.stopPropagation()"><div class="multi-filter-options"></div><div class="multi-filter-clear" onclick="clearMultiFilter('systemFilter')">Clear selection</div></div></div>
-      <div class="multi-filter" id="keywordFilterMulti"><button type="button" class="multi-filter-btn" onclick="toggleMultiFilter('keywordFilter',event)">All keywords</button><div class="multi-filter-menu" onclick="event.stopPropagation()"><div class="multi-filter-options"></div><div class="multi-filter-clear" onclick="clearMultiFilter('keywordFilter')">Clear selection</div></div></div>
-      <div class="multi-filter" id="holderFilterMulti"><button type="button" class="multi-filter-btn" onclick="toggleMultiFilter('holderFilter',event)">All holders</button><div class="multi-filter-menu" onclick="event.stopPropagation()"><div class="multi-filter-options"></div><div class="multi-filter-clear" onclick="clearMultiFilter('holderFilter')">Clear selection</div></div></div>
-      <div class="multi-filter" id="statusFilterMulti"><button type="button" class="multi-filter-btn" onclick="toggleMultiFilter('statusFilter',event)">All statuses</button><div class="multi-filter-menu" onclick="event.stopPropagation()"><div class="multi-filter-options"></div><div class="multi-filter-clear" onclick="clearMultiFilter('statusFilter')">Clear selection</div></div></div>
+      <div class="multi-filter" id="typeFilterMulti"><button type="button" class="multi-filter-btn" onclick="toggleMultiFilter('typeFilter',event)">Types</button><div class="multi-filter-menu" onclick="event.stopPropagation()"><div class="multi-filter-options"></div><div class="multi-filter-clear" onclick="clearMultiFilter('typeFilter')">Clear selection</div></div></div>
+      <div class="multi-filter" id="systemFilterMulti"><button type="button" class="multi-filter-btn" onclick="toggleMultiFilter('systemFilter',event)">Systems</button><div class="multi-filter-menu" onclick="event.stopPropagation()"><div class="multi-filter-options"></div><div class="multi-filter-clear" onclick="clearMultiFilter('systemFilter')">Clear selection</div></div></div>
+      <div class="multi-filter" id="keywordFilterMulti"><button type="button" class="multi-filter-btn" onclick="toggleMultiFilter('keywordFilter',event)">Keywords</button><div class="multi-filter-menu" onclick="event.stopPropagation()"><div class="multi-filter-options"></div><div class="multi-filter-clear" onclick="clearMultiFilter('keywordFilter')">Clear selection</div></div></div>
+      <div class="multi-filter" id="holderFilterMulti"><button type="button" class="multi-filter-btn" onclick="toggleMultiFilter('holderFilter',event)">Holders</button><div class="multi-filter-menu" onclick="event.stopPropagation()"><div class="multi-filter-options"></div><div class="multi-filter-clear" onclick="clearMultiFilter('holderFilter')">Clear selection</div></div></div>
+      <div class="multi-filter" id="statusFilterMulti"><button type="button" class="multi-filter-btn" onclick="toggleMultiFilter('statusFilter',event)">Statuses</button><div class="multi-filter-menu" onclick="event.stopPropagation()"><div class="multi-filter-options"></div><div class="multi-filter-clear" onclick="clearMultiFilter('statusFilter')">Clear selection</div></div></div>
       <div style="margin-left:auto;display:flex;gap:7px;align-items:center;font-size:11px;font-weight:750;color:#6e7889">
         <span style="padding:5px 8px;border-radius:6px;background:#eef3ff;color:#4869ad">Document</span>
         <span style="padding:5px 8px;border-radius:6px;background:#eef8e9;color:#4f753b">Vietur</span>
@@ -750,7 +796,7 @@ function clearKpiFilter(){
   render();
 }
 
-const MULTI_FILTERS={typeFilter:{label:'All types',values:[]},systemFilter:{label:'All systems',values:[]},keywordFilter:{label:'All keywords',values:[]},holderFilter:{label:'All holders',values:[]},statusFilter:{label:'All statuses',values:[]}};
+const MULTI_FILTERS={typeFilter:{label:'Types',values:[]},systemFilter:{label:'Systems',values:[]},keywordFilter:{label:'Keywords',values:[]},holderFilter:{label:'Holders',values:[]},statusFilter:{label:'Statuses',values:[]}};
 function mfState(id){return MULTI_FILTERS[id].values;}
 function mfEsc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function setMultiOptions(id,groups){const root=document.getElementById(id+'Multi');if(!root)return;const box=root.querySelector('.multi-filter-options'),selected=new Set(mfState(id));let html='';groups.forEach(g=>{if(g.label)html+=`<div class="multi-filter-group">${mfEsc(g.label)}</div>`;g.items.forEach(it=>{const val=typeof it==='string'?it:it.value,text=typeof it==='string'?it:it.text;html+=`<label class="multi-filter-option"><input type="checkbox" value="${mfEsc(val)}" ${selected.has(val)?'checked':''} onchange="multiFilterChanged('${id}',this)"><span>${mfEsc(text)}</span></label>`;});});box.innerHTML=html;MULTI_FILTERS[id].values=[...selected].filter(v=>[...box.querySelectorAll('input')].some(i=>i.value===v));box.querySelectorAll('input').forEach(i=>i.checked=mfState(id).includes(i.value));updateMultiLabel(id);}
