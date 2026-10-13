@@ -1294,3 +1294,67 @@ window.addEventListener('focus',()=>reloadPublishedData(false));
 </script>
 </body>
 </html>
+<style id="responsive-ux-v4-mobile-fixes">
+/* Mobile/tablet only: keep the desktop layout and dropdowns unchanged. */
+@media screen and (max-width:700px) {
+  /* Every table heading, including the first one, shares the same sticky top edge.
+     The first body column remains horizontally scrollable (not frozen). */
+  .table-wrap thead th,
+  .table-wrap th:first-child {
+    position:sticky !important;
+    top:0 !important;
+    left:auto !important;
+    z-index:3 !important;
+  }
+  .table-wrap td:first-child {
+    position:static !important;
+    left:auto !important;
+    box-shadow:none !important;
+  }
+
+  /* Equal-width compact filters: center labels without a decorative chevron. */
+  .multi-filter-btn {
+    padding-left:3px !important;
+    padding-right:3px !important;
+    text-align:center !important;
+  }
+  .multi-filter-btn::after { display:none !important; content:none !important; }
+
+  /* Phone-friendly bottom-sheet menu; existing checkbox/filter logic is unchanged. */
+  .multi-filter.open .multi-filter-menu {
+    position:fixed !important;
+    top:auto !important;
+    right:8px !important;
+    bottom: max(8px, env(safe-area-inset-bottom)) !important;
+    left:8px !important;
+    width:auto !important;
+    min-width:0 !important;
+    max-width:none !important;
+    max-height:min(62dvh, 520px) !important;
+    overflow-x:hidden !important;
+    overflow-y:auto !important;
+    -webkit-overflow-scrolling:touch;
+    padding:10px 10px calc(10px + env(safe-area-inset-bottom)) !important;
+    border:1px solid #dce3ef !important;
+    border-radius:16px !important;
+    box-shadow:0 16px 48px rgba(20,30,55,.24) !important;
+    z-index:1000 !important;
+  }
+  .multi-filter-option {
+    min-height:42px !important;
+    padding:9px 10px !important;
+    gap:11px !important;
+    white-space:normal !important;
+    font-size:14px !important;
+    line-height:1.3 !important;
+  }
+  .multi-filter-option input { flex:0 0 18px; width:18px !important; height:18px !important; }
+  .multi-filter-group { padding:10px 10px 5px !important; font-size:11px !important; }
+  .multi-filter-clear {
+    bottom:-10px !important;
+    margin:8px -10px -10px !important;
+    padding:13px 10px !important;
+    font-size:13px !important;
+  }
+}
+</style>
