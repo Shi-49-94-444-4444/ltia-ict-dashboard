@@ -485,6 +485,84 @@ td{padding:10px 11px;border-bottom:1px solid #edf0f5;vertical-align:middle} tbod
   th:first-child, td:first-child { position:static !important; left:auto !important; box-shadow:none !important; }
 }
 </style>
+
+<style id="responsive-ux-v3">
+/* Responsive-only alignment polish. Desktop (>1050px) intentionally untouched. */
+@media screen and (min-width:701px) and (max-width:1050px) {
+  .tabs {
+    width:100%; min-width:0; flex:1 1 100%;
+    justify-content:space-evenly;
+    gap:clamp(4px, 1.2vw, 14px);
+  }
+  .tab { flex:0 1 auto; min-width:0; }
+  .toolbar { align-items:stretch; }
+  .toolbar > .multi-filter,
+  #typeFilterMulti, #systemFilterMulti, #keywordFilterMulti,
+  #holderFilterMulti, #statusFilterMulti {
+    width:100% !important; min-width:0; max-width:none;
+    height:42px; flex:1 1 0;
+  }
+  .multi-filter-btn { width:100%; height:42px; }
+  .kpis { grid-template-columns:repeat(5,minmax(0,1fr)); align-items:stretch; }
+  .kpi { width:100%; min-width:0; height:112px; min-height:112px; max-height:112px; }
+  .kpi > .label {
+    min-height:32px; display:flex; align-items:center; justify-content:center;
+    text-align:center; overflow-wrap:normal; word-break:normal; hyphens:manual;
+    text-wrap:balance; line-height:1.15; padding-inline:1px;
+  }
+}
+@media screen and (max-width:700px) {
+  .tabs {
+    display:flex; width:100%; min-width:0; flex:1 1 100%;
+    justify-content:space-evenly; align-items:center;
+    gap:clamp(2px, 1vw, 8px); overflow-x:auto;
+  }
+  .tab { flex:0 1 auto; min-width:0; padding-inline:clamp(6px, 2vw, 12px); }
+  .toolbar {
+    grid-template-columns:repeat(5,minmax(0,1fr));
+    align-items:stretch; gap:6px;
+  }
+  .multi-filter,
+  #typeFilterMulti, #systemFilterMulti, #keywordFilterMulti,
+  #holderFilterMulti, #statusFilterMulti {
+    width:100% !important; min-width:0; max-width:none; height:38px;
+  }
+  .multi-filter-btn {
+    width:100%; min-width:0; height:38px; padding-inline:4px 15px;
+    display:block; text-align:center; font-size:clamp(7.5px, 2.15vw, 10px);
+    line-height:1.1; letter-spacing:-.15px;
+  }
+  .multi-filter-btn:after { right:5px; width:4px; height:4px; }
+  .kpis {
+    grid-template-columns:repeat(5,minmax(0,1fr));
+    grid-auto-rows:104px; align-items:stretch; gap:5px;
+  }
+  .kpi {
+    width:100%; min-width:0; height:104px; min-height:104px; max-height:104px;
+    padding:7px 3px; display:flex; flex-direction:column; align-items:stretch;
+  }
+  .kpi > .label {
+    width:100%; min-width:0; min-height:42px; max-height:42px;
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    font-size:clamp(7px, 2vw, 9px); line-height:1.12; letter-spacing:-.2px;
+    overflow-wrap:normal; word-break:normal; hyphens:manual; text-wrap:balance;
+    padding:0 1px;
+  }
+  .kpi .kpi-total { width:100%; min-width:0; flex:1; margin-top:2px; justify-content:center; }
+  .kpi .value { font-size:clamp(15px, 4.2vw, 21px); line-height:1.15; }
+}
+@media screen and (max-width:380px) {
+  .tabs { gap:2px; }
+  .tab { padding-inline:5px; font-size:11px; }
+  .toolbar { gap:4px; padding:7px; }
+  .multi-filter-btn { font-size:7px; padding-inline:2px 12px; }
+  .multi-filter-btn:after { right:4px; }
+  .kpis { gap:4px; grid-auto-rows:100px; }
+  .kpi { height:100px; min-height:100px; max-height:100px; padding:6px 2px; }
+  .kpi > .label { font-size:7px; min-height:42px; max-height:42px; }
+}
+</style>
+
 </head>
 <body class="is-loading">
 <div class="app">
