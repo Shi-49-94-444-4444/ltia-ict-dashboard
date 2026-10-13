@@ -268,32 +268,16 @@ td{padding:10px 11px;border-bottom:1px solid #edf0f5;vertical-align:middle} tbod
     animation: ltiaShimmer 1.35s ease-in-out infinite;
     border-radius: 5px;
   }
-  body.is-loading .kpi .label {
-    width: 62%; height: 17px; line-height: 17px; color: transparent !important;
-    background: linear-gradient(100deg, #edf1f7 15%, #f8faff 35%, #e8edf5 55%);
-    background-size: 220% 100%; animation: ltiaShimmer 1.35s ease-in-out infinite;
-    border-radius: 4px;
-  }
+  /* KPI titles are fixed UI labels, so keep them visible during initial data loading. */
   body.is-loading .kpi .value {
     width: 52px; height: 35px; line-height: 35px; margin: 4px auto 0; color: transparent !important;
     background: linear-gradient(100deg, #edf1f7 15%, #f8faff 35%, #e8edf5 55%);
     background-size: 220% 100%; animation: ltiaShimmer 1.35s ease-in-out infinite;
     border-radius: 5px; font-size: 0 !important;
   }
-  body.is-loading .kpi-total small {
-    display:block; width: 38px; height: 14px; line-height: 14px; margin: 0 auto; color: transparent !important;
-    background: linear-gradient(100deg, #edf1f7 15%, #f8faff 35%, #e8edf5 55%);
-    background-size: 220% 100%; animation: ltiaShimmer 1.35s ease-in-out infinite;
-    border-radius: 4px; font-size: 0 !important;
-  }
+  /* TOTAL/RFA/RFA-SDS/RFI labels are static; shimmer only their numeric values. */
   body.is-loading .ks b {
     display:block; width: 28px; height: 22px; line-height: 22px; margin: 0 auto; color: transparent !important;
-    background: linear-gradient(100deg, #edf1f7 15%, #f8faff 35%, #e8edf5 55%);
-    background-size: 220% 100%; animation: ltiaShimmer 1.35s ease-in-out infinite;
-    border-radius: 4px; font-size: 0 !important;
-  }
-  body.is-loading .ks span {
-    width: 32px; height: 14px; line-height: 14px; margin: 1px auto 0; color: transparent !important;
     background: linear-gradient(100deg, #edf1f7 15%, #f8faff 35%, #e8edf5 55%);
     background-size: 220% 100%; animation: ltiaShimmer 1.35s ease-in-out infinite;
     border-radius: 4px; font-size: 0 !important;
@@ -319,11 +303,8 @@ td{padding:10px 11px;border-bottom:1px solid #edf0f5;vertical-align:middle} tbod
   body.data-ready .table-card { animation: ltiaReveal .38s ease-out .08s both; }
   @media (prefers-reduced-motion: reduce) {
     .ltia-skeleton,
-    body.is-loading .kpi .label,
     body.is-loading .kpi .value,
-    body.is-loading .kpi-total small,
-    body.is-loading .ks b,
-    body.is-loading .ks span { animation:none !important; }
+    body.is-loading .ks b { animation:none !important; }
     body.data-ready .kpi, body.data-ready .table-card { animation:none !important; }
   }
 </style>
@@ -560,6 +541,29 @@ td{padding:10px 11px;border-bottom:1px solid #edf0f5;vertical-align:middle} tbod
   .kpis { gap:4px; grid-auto-rows:100px; }
   .kpi { height:100px; min-height:100px; max-height:100px; padding:6px 2px; }
   .kpi > .label { font-size:7px; min-height:42px; max-height:42px; }
+}
+</style>
+
+
+<style id="kpi-loading-responsive-polish-v1">
+/* Fixed KPI labels stay visible; dynamic numbers alone use shimmer placeholders. */
+@media screen and (max-width:1050px) {
+  .kpi { text-align:center; }
+  .kpi > .label {
+    width:100%; text-align:center; margin-inline:auto;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .kpi .kpi-total {
+    width:100%; min-width:0; margin-inline:auto;
+    align-items:center; justify-content:center; text-align:center;
+  }
+  .kpi .value { display:block; text-align:center; margin-left:auto !important; margin-right:auto !important; }
+  .kpi-split { width:100%; }
+  .ks { min-width:0; text-align:center; }
+  .ks b, .ks span { margin-left:auto; margin-right:auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.data-ready .kpi, body.data-ready .table-card { animation:none !important; }
 }
 </style>
 
