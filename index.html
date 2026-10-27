@@ -596,6 +596,7 @@ td{padding:10px 11px;border-bottom:1px solid #edf0f5;vertical-align:middle} tbod
     <div class="actions">
       <div class="clockbox"><div class="time" id="liveTime">--:--:--</div><div class="date" id="liveDate">--/--/----</div><div class="date" id="dataStatus">Loading Excel data…</div></div>
       <button class="btn hide-sm btn-print" onclick="printCurrentView()">Print</button>
+      <button type="button" class="btn hide-sm freeze-column-btn" id="freezeColumnBtn" onclick="toggleFreezeFirstColumn()" aria-pressed="false">Freeze</button>
       <button class="btn primary" onclick="resetFilters()">Default</button>
     </div>
   </div>
@@ -1227,6 +1228,18 @@ function buildPrintDocument(){
   `;
   return `<!doctype html><html><head><meta charset="utf-8"><title>JCJV - LTIA Document Tracking List</title><style>${css}</style></head><body><div class="head"><div class="a">JCJV – LTIA TERMINAL EQUIPMENT</div><div class="b">DOCUMENT TRACKING LIST</div><div class="c">RFA / RFA-SDS / RFI</div><div class="meta">${esc(line)}</div></div><div class="rule"></div><table><thead>${heads}</thead><tbody>${printRowsHTML(rows)}</tbody></table></body></html>`;
 }
+function toggleFreezeFirstColumn(){
+  // The button is desktop-only; mobile keeps the first column frozen automatically.
+  const enabled = !document.body.classList.contains('freeze-first-column');
+  document.body.classList.toggle('freeze-first-column', enabled);
+  const button = document.getElementById('freezeColumnBtn');
+  if (button) {
+    button.setAttribute('aria-pressed', String(enabled));
+    button.textContent = enabled ? 'Unfreeze' : 'Freeze';
+    button.title = enabled ? 'Unfreeze the first table column' : 'Freeze the first table column';
+  }
+}
+
 function printCurrentView(){
   const old=document.getElementById('ltiaPrintFrame'); if(old) old.remove();
   const frame=document.createElement('iframe');
@@ -1315,11 +1328,25 @@ window.addEventListener('focus',()=>reloadPublishedData(false));
     left:auto !important;
     z-index:3 !important;
   }
+  /* On phones, keep the first document column visible while scrolling horizontally. */
+  .table-wrap th:first-child,
   .table-wrap td:first-child {
-    position:static !important;
-    left:auto !important;
-    box-shadow:none !important;
+    position:sticky !important;
+    left:0 !important;
+    box-shadow:2px 0 4px rgba(35,50,80,.08) !important;
   }
+  .table-wrap th:first-child {
+    top:0 !important;
+    z-index:5 !important;
+    background:#eef3ff !important;
+  }
+  .table-wrap td:first-child {
+    z-index:2 !important;
+    min-width:175px;
+    max-width:175px;
+    background:#fff !important;
+  }
+  .table-wrap tbody tr:hover td:first-child { background:#f7f9fd !important; }
 
   /* Equal-width compact filters: center labels without a decorative chevron. */
   .multi-filter-btn {
@@ -1364,6 +1391,42 @@ window.addEventListener('focus',()=>reloadPublishedData(false));
     margin:8px -10px -10px !important;
     padding:13px 10px !important;
     font-size:13px !important;
+  }
+}
+</style>
+
+<style id="freeze-first-column-feature">
+/* Desktop: freezing the first column is opt-in through the button beside Print. */
+@media screen and (min-width:1051px) {
+  body.freeze-first-column .table-wrap th:first-child,
+  body.freeze-first-column .table-wrap td:first-child {
+    position:sticky !important;
+    left:0 !important;
+    box-shadow:2px 0 5px rgba(35,50,80,.10) !important;
+  }
+  body.freeze-first-column .table-wrap th:first-child {
+    z-index:5 !important;
+    background:#eef3ff !important;
+  }
+  body.freeze-first-column .table-wrap td:first-child {
+    z-index:1 !important;
+    background:#fff !important;
+  }
+  body.freeze-first-column .table-wrap tbody tr:hover td:first-child {
+    background:#f7f9fd !important;
+  }
+}
+.freeze-column-btn[aria-pressed="true"] {
+  background:#e8efff !important;
+  border-color:#9eb3ed !important;
+  color:#3159a6 !important;
+}
+@media print {
+  body.freeze-first-column .table-wrap th:first-child,
+  body.freeze-first-column .table-wrap td:first-child {
+    position:static !important;
+    left:auto !important;
+    box-shadow:none !important;
   }
 }
 </style>
